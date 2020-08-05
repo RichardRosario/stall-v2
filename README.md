@@ -11,18 +11,21 @@
 1. MongoDB
 2. ES6,ES7
 3. Auth,xss
-4. AWS S3.Stripe
-5. Linting with eslint
-6. Git
+4. AWS S3.Stripe for payment
+5. Linting with eslint for coding standard
+6. Git to maintain our code versions
 7. Unit testing-just,mocha,chai
-8. express
-9. mongoose
-10. joi
-11. passport
-12. node
+8. express to handle server requests
+9. mongoose for mongoDB
+10. joi for validation
+11. passport for logging social media provider
+12. node for server side
+13. optimized for SEO
 
 ## other technologies that may be needed in the course of development
 
 1. ...
 2. ...
 3. ...
+
+## Tasks
