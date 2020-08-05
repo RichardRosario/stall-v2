@@ -6,6 +6,10 @@
   "keywords": [
     "ecommerce"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RichardRosario/stall-v2.git"
+  },
   "scripts": {
     "start": "nodemon index.js",
     "serve:local": "nodemon index.js",
