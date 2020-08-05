@@ -11,7 +11,7 @@
     "url": "https://github.com/RichardRosario/stall-v2.git"
   },
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "serve:local": "nodemon index.js",
     "serve:debug": "nodemon --inspect index.js",
     "test": "mocha tests/*.js --exit",
@@ -29,6 +29,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "helmet": "^4.0.0",
+    "https": "^1.0.0",
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
