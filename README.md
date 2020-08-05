@@ -29,3 +29,7 @@
 3. ...
 
 ## Tasks
+
+1. setup dev environment
+2. install dependencies and libraries
+3.
