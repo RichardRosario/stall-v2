@@ -6,6 +6,8 @@ app.get("/", (req, res) => {
   return res.send("Hello world");
 });
 
-app.listen(5060, () => {
-  console.log("Server started at port 5060");
+app.listen(8080, () => {
+  console.log("Server started at port 8080");
 });
+
+module.exports = app;
