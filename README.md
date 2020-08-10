@@ -32,4 +32,9 @@
 
 1. setup dev environment
 2. install dependencies and libraries
-3.
+3. installed ejs for templating
+4. npm i nodemon for code reload in dev
+5. npm i mongoose to connect mongoDB
+6. bootstap html
+7. Create User model and registration page
+8. submit and save user to database
