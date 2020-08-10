@@ -22,7 +22,7 @@ app.get("/register", (req, res) => {
 app.post("/register", async (req, res) => {
   user = new User(req.body);
   await user.save();
-  res.render("register", { message: "Registration was successful" });
+  res.send("register", { message: "Registration was successful" });
 });
 
 app.listen(8080, () => {

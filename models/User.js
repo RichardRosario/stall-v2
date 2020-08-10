@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema(
     email: {
       type: String,
       required: [true, "Email is required"],
+      unique: true,
       index: true,
     },
     password: {
@@ -23,6 +24,10 @@ const userSchema = mongoose.Schema(
       default: true,
     },
     isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    isAdmin: {
       type: Boolean,
       default: false,
     },
