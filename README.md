@@ -24,9 +24,9 @@
 
 ## other technologies that may be needed in the course of development
 
-1. ...
-2. ...
-3. ...
+1. body-parser
+2. ejs templating
+3. bcrypt
 
 ## Tasks
 
@@ -41,3 +41,4 @@
 9. create registration form to accept user data
 10. submit and save user to database
 11. parse data with body-parser
+12. Encryting our password with bcrypt

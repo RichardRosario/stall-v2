@@ -15,14 +15,14 @@ app.get("/login", (req, res) => {
   return res.render("login");
 });
 app.get("/register", (req, res) => {
-  return res.render("register");
+  return res.render("register", { message: null });
 });
 
 // post register data to database
 app.post("/register", async (req, res) => {
   user = new User(req.body);
   await user.save();
-  res.send("register", { message: "Registration was successful" });
+  res.render("register", { message: "Registration was successful" });
 });
 
 app.listen(8080, () => {

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <!-- head -->
-  <%- include('includes/head')%>
+  <%- include('includes/head') %>
   <body>
     <!-- nav -->
-    <%- include('includes/nav')%>
+    <%- include('includes/nav') %>
     <!-- registration form -->
     <div class="container">
       <h1>Register</h1>
-
-      <div class="alert alert-success" role="alert"></div>
-
+      <% if (message) { %>
+      <div class="alert alert-success" role="alert">
+        <%= message %>
+      </div>
+      <% } %>
       <form method="POST" action="/register">
         <div class="form-group">
           <label for="name">Name<sup class="text-danger">*</sup></label>

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 // create user schema
 const userSchema = mongoose.Schema(
@@ -34,6 +35,14 @@ const userSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// mongoose middleware
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) next();
+
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
 
 // create collection name
 const User = mongoose.model("users", userSchema);
