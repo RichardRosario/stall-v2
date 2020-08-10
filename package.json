@@ -4,7 +4,12 @@
   "description": "a multi-vendor ecommerce website in react and node",
   "main": "index.js",
   "keywords": [
-    "ecommerce"
+    "ecommerce",
+    "node",
+    "javascript",
+    "expressjs",
+    "mongoDB",
+    "mongoose"
   ],
   "repository": {
     "type": "git",

@@ -36,5 +36,8 @@
 4. npm i nodemon for code reload in dev
 5. npm i mongoose to connect mongoDB
 6. bootstap html
-7. Create User model and registration page
-8. submit and save user to database
+7. create header,footer,nav html in includes folder
+8. Create User model and schema
+9. create registration form to accept user data
+10. submit and save user to database
+11. parse data with body-parser
