@@ -22,7 +22,7 @@
 12. node for server side
 13. optimized for SEO
 
-## other technologies that may be needed in the course of development
+## other technologies needed in the course of development
 
 1. body-parser
 2. ejs templating
