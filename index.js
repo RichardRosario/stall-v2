@@ -1,33 +1,17 @@
 const express = require("express");
 require("./utils/db.config");
 const bodyParser = require("body-parser");
-const User = require("./models/User");
+const authRoutes = require("./controllers/routes/authRoutes");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("view engine", "ejs");
 
+app.use("/", authRoutes);
+
 app.get("/", (req, res) => {
   return res.render("index");
-});
-app.get("/login", (req, res) => {
-  return res.render("login");
-});
-app.get("/register", (req, res) => {
-  return res.render("register", { message: null });
-});
-
-// post register data to database
-app.post("/register", async (req, res) => {
-  user = new User(req.body);
-  await user.save(function (err) {
-    console.log(err);
-    res.render("register", {
-      message: "Validation failed! Email already in use",
-    });
-  });
-  res.render("register", { message: "Registration was successful" });
 });
 
 app.listen(8080, () => {
