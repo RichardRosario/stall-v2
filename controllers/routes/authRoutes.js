@@ -9,19 +9,19 @@ router.get("/register", (req, res) => {
 });
 
 // post register data to database
-app.post("/register", async (req, res) => {
-
+router.post("/register", async (req, res) => {
   try {
     const user = await addUser(req.body);
     return res.render("register", { message: "Registration was successful" });
-
-  } catch (error) {
-    if(err){
+  } catch (err) {
+    if (err) {
       console.log(err);
-      res.render("/register",{message: "Error Validation"})
+      return res
+        .status(400)
+        .render("/register", { message: "Error Validation" });
     }
-  });         
-}
+  }
+});
 
 // show login page
 router.get("/login", (req, res) => {
