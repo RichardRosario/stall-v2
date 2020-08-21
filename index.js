@@ -21,7 +21,12 @@ app.get("/register", (req, res) => {
 // post register data to database
 app.post("/register", async (req, res) => {
   user = new User(req.body);
-  await user.save();
+  await user.save(function (err) {
+    console.log(err);
+    res.render("register", {
+      message: "Validation failed! Email already in use",
+    });
+  });
   res.render("register", { message: "Registration was successful" });
 });
 

@@ -42,3 +42,4 @@
 10. submit and save user to database
 11. parse data with body-parser
 12. Encryting our password with bcrypt
+13. imported bcrypt to user model and hashed it.
