@@ -2,7 +2,7 @@
 
 ## This is going to be different from the other 2 I have created in the past as this will be a multi-vendor ecommerce website.
 
-## This is my 3rd attemp in creating an ecommerce system in react as part of my daily exercise to get myself up to standard in react-node mastery level!
+## This is my 3rd attemp in creating an ecommerce system as part of my daily exercise to get myself up to standard! But this is different because this will be built on node and ejs templating!
 
 ## Feel free to use this repo. ENJOY!!
 
