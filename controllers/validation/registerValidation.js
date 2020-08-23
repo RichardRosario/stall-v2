@@ -16,4 +16,4 @@ const registerSchemaValidate = Joi.object({
     }),
 }).with("password", "repeat_password");
 
-module.exports = registerSchemaValidate;
+module.exports = { registerSchemaValidate };

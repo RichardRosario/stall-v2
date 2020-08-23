@@ -2,6 +2,7 @@ const User = require("../../models/users/User");
 const { addUser } = require("../../models/users/userService");
 const express = require("express");
 const router = express.Router();
+const { registerSchemaValidate } = require("../validation/registerValidation");
 
 // show user registration page
 router.get("/register", (req, res) => {
@@ -11,6 +12,14 @@ router.get("/register", (req, res) => {
 // post register data to database
 router.post("/register", async (req, res) => {
   try {
+    const validationResult = registerSchemaValidate.validate(req.body, {
+      abortEarly: false,
+    });
+    if (validationResult.error) {
+      return res.render("register", {
+        message: "Registration validate failed!",
+      });
+    }
     const user = await addUser(req.body);
     return res.render("register", { message: "Registration was successful" });
   } catch (err) {
