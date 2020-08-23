@@ -1,5 +1,5 @@
 const chai = require("chai");
-const chaiHttp = require("chai-http");
+const chaiHttp = require("./node_modules/chai-http");
 const app = require("../index");
 
 // configure chai
