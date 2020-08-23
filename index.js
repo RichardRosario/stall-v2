@@ -1,5 +1,5 @@
 const express = require("express");
-require("./utils/db.config");
+require("./controllers/utils/db.config");
 const bodyParser = require("body-parser");
 const authRoutes = require("./controllers/routes/authRoutes");
 
