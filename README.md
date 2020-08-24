@@ -43,3 +43,4 @@
 11. parse data with body-parser
 12. Encryting our password with bcrypt
 13. imported bcrypt to user model and hashed it.
+14. combining registration validation with joi and mongoose..

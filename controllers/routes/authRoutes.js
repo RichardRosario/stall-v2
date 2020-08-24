@@ -3,6 +3,7 @@ const { addUser } = require("../../models/users/userService");
 const express = require("express");
 const router = express.Router();
 const { registerSchemaValidate } = require("../validation/registerValidation");
+const { errorFormater, mongooseFormater } = require("../utils/errorFormater");
 
 // show user registration page
 router.get("/register", (req, res) => {
@@ -16,6 +17,7 @@ router.post("/register", async (req, res) => {
       abortEarly: false,
     });
     if (validationResult.error) {
+      return res.send(errorFormater(validationResult.error));
       return res.render("register", {
         message: "Registration validate failed!",
       });
@@ -25,6 +27,7 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     if (err) {
       console.log(err);
+      return res.send(mongooseFormater(err));
       return res
         .status(400)
         .render("/register", { message: "Error Validation" });
