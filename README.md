@@ -1,4 +1,4 @@
-# Stall Open Source eCommerce created in react and node.
+# Stall Open Source eCommerce created in node.
 
 ## This is going to be different from the other 2 I have created in the past as this will be a multi-vendor ecommerce website.
 

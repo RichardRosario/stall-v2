@@ -1,5 +1,5 @@
 const chai = require("chai");
-const chaiHttp = require("./node_modules/chai-http");
+const chaiHttp = require("chai-http");
 const app = require("../index");
 
 // configure chai
@@ -26,6 +26,19 @@ describe("Make sure register failure if no data", () => {
       .post("/register")
       .end((err, res) => {
         res.should.have.status(400);
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+});
+
+describe("Make sure login fails if no data", () => {
+  it("should return status 401", (done) => {
+    chai
+      .request(app)
+      .post("/login")
+      .end((err, res) => {
+        res.should.have.status(401);
         res.body.should.be.a("object");
         done();
       });
