@@ -1,5 +1,5 @@
 const Category = require("./Category");
-const { calculateOffset } = require("../../controllers/utils/global");
+const { calculateOffset } = require("../../controllers/utils/globalHelper");
 /**
  * Create new category
  * @param {Object} categoryInput - Category input, validated by category validation

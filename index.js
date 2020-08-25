@@ -9,6 +9,11 @@ const MongoStore = require("connect-mongo")(session);
 const mongoDBConnection = require("./controllers/utils/db.config");
 const authRoutes = require("./controllers/routes/authRoutes");
 const passport = require("passport");
+const categoryRoutes = require("./controllers/routes/categoryRoutes");
+const categoryApiRoutes = require("./controllers/routes/api/categoryApiRoutes");
+const authMiddleware = require("./controllers/middlewares/authMiddleware");
+const config = require("./controllers/utils/config");
+const { trimAndSantizeObject } = require("./controllers/utils/globalHelper");
 
 const app = express();
 
@@ -23,7 +28,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
-    store: new MongoStore({ mongooseConnection: mongoDbConnection }),
+    store: new MongoStore({ mongooseConnection: mongoDBConnection }),
   })
 );
 app.use(express.static("public"));
@@ -56,7 +61,7 @@ app.use("/", authRoutes);
 app.use("/", categoryRoutes);
 app.use("/controllers/routes/api/v1/category", categoryApiRoutes);
 
-app.get("/", flasherMiddleware, (req, res) => {
+app.get("/", (req, res) => {
   return res.render("pages/homepage");
 });
 
