@@ -1,54 +1,58 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
-const saltRounds = 10;
-
-// create user schema
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: [true, "Name is required"],
-      maxlength: [64, `Can't be longer than 64 characters`],
-      minlength: [2, `Minimum of 2 letters, please!`],
-    },
-    email: {
-      type: String,
-      lowercase: true,
-      required: [true, "Email is required"],
-      unique: true,
-      index: true,
-    },
-    password: {
-      type: String,
-      required: [true, "password is required"],
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
+const userSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+    minlength: [2, 'Name can\'t be smaller than 2 characters'],
+    maxlength: [64, 'Name can\'t be greater than 64 characters']
   },
-  { timestamps: true }
-);
+  email: {
+    type: String,
+    lowercase: true,
+    required: [true, 'Email is required'],
+    maxlength: [128, 'Email can\'t be greater than 128 characters'],
+    index: true
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required']
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false
+  }
+}, {
+  timestamps: true
+})
 
-// hashing password using mongoose middleware and bcrypt
-userSchema.pre("save", async function (next) {
-  // check is password is modified
-  if (!this.isModified("password")) next();
-  // if modified hash the password
-  this.password = await bcrypt.hash(this.password, saltRounds);
-  next();
-});
+/**
+ * Validates unique email
+ */
+userSchema.path('email').validate(async (email) => {
+  const emailCount = await mongoose.models.User.countDocuments({ email })
+  return !emailCount
+}, 'Email already exists')
 
-// create collection name
-const User = mongoose.model("users", userSchema);
+/**
+ * Encrypts password if value is changed
+ */
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) next()
+  this.password = await bcrypt.hash(this.password, 10)
+  return next()
+})
 
-module.exports = User;
+userSchema.methods.checkPassword = async function (password) {
+  const result = await bcrypt.compare(password, this.password)
+  return result
+}
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User

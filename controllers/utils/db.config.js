@@ -1,10 +1,16 @@
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/stall2", {
+const mongoose = require('mongoose')
+const config = require('./config')
+
+mongoose.set('debug', process.env.NODE_ENV !== 'production')
+
+mongoose.connect(config.mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+  useCreateIndex: true
+})
 
-mongoose.set("useCreateIndex", true);
-mongoose.connection.once("open", () => {
-  console.log("Connected to mongoDB");
-});
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB')
+})
+
+module.exports = mongoose.connection

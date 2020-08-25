@@ -1,43 +1,127 @@
-const User = require("../../models/users/User");
-const { addUser } = require("../../models/users/userService");
 const express = require("express");
 const router = express.Router();
-const { registerSchemaValidate } = require("../validation/registerValidation");
-const { errorFormater, mongooseFormater } = require("../utils/errorFormater");
+const { addUser } = require("../../models/users/userService");
+const { registerSchema } = require("../../models/users/authValidation");
+const {
+  joiErrorFormatter,
+  mongooseErrorFormatter,
+} = require("../utils/validationFormatter");
+const passport = require("passport");
+const guestMiddleware = require("../middlewares/guestMiddleware");
+const authMiddleware = require("../middlewares/authMiddleware");
+const flasherMiddleware = require("../middlewares/flasherMiddleware");
 
-// show user registration page
-router.get("/register", (req, res) => {
-  return res.render("register", { message: null });
+/**
+ * Shows page for user registration
+ */
+router.get("/register", guestMiddleware, flasherMiddleware, (req, res) => {
+  return res.render("auth/register", {
+    title: "Register",
+  });
 });
 
-// post register data to database
-router.post("/register", async (req, res) => {
+/**
+ * Handles user registration
+ */
+router.post("/register", guestMiddleware, async (req, res) => {
   try {
-    const validationResult = registerSchemaValidate.validate(req.body, {
+    const validationResult = registerSchema.validate(req.body, {
       abortEarly: false,
     });
     if (validationResult.error) {
-      return res.send(errorFormater(validationResult.error));
-      return res.render("register", {
-        message: "Registration validate failed!",
-      });
+      req.session.flashData = {
+        message: {
+          type: "error",
+          body: "Validation Errors",
+        },
+        errors: joiErrorFormatter(validationResult.error),
+        formData: req.body,
+      };
+      return res.redirect("/register");
     }
-    const user = await addUser(req.body);
-    return res.render("register", { message: "Registration was successful" });
-  } catch (err) {
-    if (err) {
-      console.log(err);
-      return res.send(mongooseFormater(err));
-      return res
-        .status(400)
-        .render("/register", { message: "Error Validation" });
-    }
+    await addUser(req.body);
+    req.session.flashData = {
+      message: {
+        type: "success",
+        body: "Registration success",
+      },
+    };
+    return res.redirect("/register");
+  } catch (e) {
+    req.session.flashData = {
+      message: {
+        type: "error",
+        body: "Validation Errors",
+      },
+      errors: mongooseErrorFormatter(e),
+      formData: req.body,
+    };
+    return res.redirect("/register");
   }
 });
 
-// show login page
-router.get("/login", (req, res) => {
-  return res.render("login");
+/**
+ * Shows page for user login
+ */
+router.get("/login", guestMiddleware, flasherMiddleware, (req, res) => {
+  return res.render("auth/login", {
+    title: "Login",
+  });
+});
+
+/**
+ * Logs in a user
+ */
+router.post("/login", guestMiddleware, (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      console.error("Err:", err);
+      req.session.flashData = {
+        message: {
+          type: "error",
+          body: "Login failed",
+        },
+      };
+      return res.redirect("/login");
+    }
+
+    if (!user) {
+      req.session.flashData = {
+        message: {
+          type: "error",
+          body: info.message,
+        },
+      };
+      return res.redirect("/login");
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        console.error("Err:", err);
+        req.session.flashData = {
+          message: {
+            type: "error",
+            body: "Login failed",
+          },
+        };
+      }
+      return res.redirect("/dashboard");
+    });
+  })(req, res, next);
+});
+
+/**
+ * Logs out a user
+ */
+router.get("/logout", authMiddleware, (req, res) => {
+  req.logout();
+  req.session.flashData = {
+    message: {
+      type: "success",
+      body: "Logout success",
+    },
+  };
+  return res.redirect("/");
 });
 
 module.exports = router;
