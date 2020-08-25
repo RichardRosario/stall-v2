@@ -44,3 +44,4 @@
 12. Encryting our password with bcrypt
 13. imported bcrypt to user model and hashed it.
 14. combining registration validation with joi and mongoose..
+15. Changed templating to pug.. for better frontend display control
