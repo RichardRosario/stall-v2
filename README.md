@@ -46,4 +46,5 @@
 14. combining registration validation with joi and mongoose..
 15. Changed templating to pug.. for better frontend display control
 16. implemented passportjs and middlewares..
-17. serializing and desirializing the user sessiion
+17. serializing and desirializing the user session
+18. implemented session storage in database

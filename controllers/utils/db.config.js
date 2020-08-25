@@ -3,7 +3,7 @@ const config = require("./config");
 
 mongoose.set("debug", process.env.NODE_ENV !== "production");
 
-mongoose.connect(config.mongoUrl, {
+mongoose.connect("mongodb://localhost:27017/stall2", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
