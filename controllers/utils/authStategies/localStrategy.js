@@ -13,9 +13,12 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email });
-        if (!user) return done(null, false, { message: "User not found" });
+        if (!user)
+          return done(null, false, {
+            message: "That user not in our database",
+          });
         if (await user.checkPassword(password)) return done(null, user);
-        return done(null, false, { message: "Incorrect password" });
+        return done(null, false, { message: "Password is incorrect!" });
       } catch (e) {
         return done(e);
       }
