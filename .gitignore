@@ -2,3 +2,4 @@
 node_modules/
 bakup/
 *.log
+.env
