@@ -111,7 +111,7 @@ router.post("/login", guestMiddleware, (req, res, next) => {
 });
 
 /**
- * Logs out a user
+ * Logout users
  */
 router.get("/logout", authMiddleware, (req, res) => {
   req.logout();
