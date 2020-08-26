@@ -50,13 +50,14 @@ app.use((req, res, next) => {
 });
 
 /**
- * App level locals
+ * App locals level settings
  */
 app.locals.title = "Stall V2";
-app.locals.message = {}; // Used in displaying alert
-app.locals.formData = {}; // For prefilling data on form validation
-app.locals.errors = {}; // Form validation errors
+app.locals.message = {};
+app.locals.formData = {};
+app.locals.errors = {};
 
+// page routes
 app.use("/", authRoutes);
 app.use("/", categoryRoutes);
 app.use("/controllers/routes/api/v1/category", categoryApiRoutes);
@@ -73,6 +74,7 @@ app.use((req, res, next) => {
   res.status(404).render("pages/404");
 });
 
+// listen to running port
 app.listen(config.port, () => {
   console.log(`Server running at port ${config.port}`);
 });
