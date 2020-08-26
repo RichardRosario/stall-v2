@@ -70,10 +70,6 @@ app.get("/dashboard", authMiddleware, (req, res) => {
   return res.render("dashboard/dashboard");
 });
 
-app.use((req, res, next) => {
-  res.status(404).render("pages/404");
-});
-
 // listen to running port
 app.listen(config.port, () => {
   console.log(`Server running at port ${config.port}`);
