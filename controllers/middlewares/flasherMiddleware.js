@@ -7,6 +7,7 @@ const flasherMiddleware = (req, res, next) => {
         // access the value of flashData in key and assign to res.locals
         res.locals[key] = req.session.flashData[key];
       }
+      // clear session after flashing it
       req.session.flashData = null;
     }
   }
