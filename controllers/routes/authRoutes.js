@@ -37,6 +37,7 @@ router.post("/register", guestMiddleware, async (req, res) => {
         errors: joiErrorFormatter(validationResult.error),
         formData: req.body,
       };
+      // redirect to get register page
       return res.redirect("/register");
     }
     await addUser(req.body);
@@ -76,12 +77,12 @@ router.post("/login", guestMiddleware, (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       console.error("Err:", err);
-      // req.session.flashData = {
-      //   message: {
-      //     type: "error",
-      //     body: "Login failed",
-      //   },
-      // };
+      req.session.flashData = {
+        message: {
+          type: "error",
+          body: "Login failed",
+        },
+      };
       return res.redirect("/login");
     }
 

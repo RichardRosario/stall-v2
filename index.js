@@ -32,6 +32,7 @@ app.use(
   })
 );
 app.use(express.static("public"));
+//preventing loading post request over again
 app.use(logger("dev"));
 app.use(passport.initialize());
 app.use(passport.session());

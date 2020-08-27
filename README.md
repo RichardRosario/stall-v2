@@ -50,3 +50,4 @@
 18. implemented session storage in database
 19. added bcrypt password compare check
 20. added user logout functionality and route
+21. redirecting users without losing request data
