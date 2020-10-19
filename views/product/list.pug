@@ -1,0 +1,111 @@
+extends ../master/panel/layout
+block content
+  .content-header: .container-fluid: .row.mb-2
+    .col-sm-6: h1.m-0.text-dark Product List
+    .col-sm-6: ol.breadcrumb.float-sm-right
+      li.breadcrumb-item: a(href="/dashboard") Home
+      li.breadcrumb-item.active Product
+
+  .content: .container-fluid#app: .card
+    .card-header.d-flex.justify-content-between.align-items-center
+      h3.flex-fill.card-title Products
+      .flex-shrink-1.card-tools
+        a.btn.btn-sm.btn-primary.pull-right(title='Create Product', href="/product/create")
+          | New
+          |
+          i.fas.fa-fw.fa-plus-circle
+
+    .card-body
+      template(v-if="meta.total")
+        loading(
+          color="#007BFF"
+          :height="128"
+          :width="128"
+          :active='isLoading'
+          :is-full-page='true'
+        )
+
+        .row
+          .col-sm-6.col-md-6: .form-group
+            label(for='page_size') Page Size
+            select#page_size.custom-select(v-model="pageSize")
+              option 10
+              option 25
+              option 50
+              option 100
+              option 500
+
+          .col-sm-6.col-md-6: .form-group
+            label(for='keyword') Search
+            input#search.form-control(v-model="keyword" type='text' placeholder='Search...')
+
+        .card(v-for="(product, index) in products" :key="product._id").d-md-none
+          .card-header: h3.card-title {{ product.name }}
+          .card-body
+            dl.row
+              dt.col-sm-4 Name
+              dd.col-sm-8 {{ product.name }}
+              dt.col-sm-4 Description
+              dd.col-sm-8 {{ product.description }}
+              dt.col-sm-4 Leaf
+              dd.col-sm-8 {{ product.isLeaf ? 'Yes' : 'No' }}
+              template(v-if="product.seoDescription")
+                dt.col-sm-4 SEO Description
+                dd.col-sm-8 {{ product.seoDescription }}
+          .card-footer
+            button.btn.btn-danger(@click="destroy(product._id)")
+              i.fa.fa-fw.fa-trash
+              | Delete
+
+            a.btn.btn-secondary.mx-1(href="/product/create")
+              i.fa.fa-fw.fa-edit
+              | Edit
+
+        table.table.table-bordered.d-none.d-md-table
+          thead
+            tr
+              th(style='width: 10px') #
+              th Name
+              th Description
+              th Leaf
+              th Properties
+              th Actions
+          tbody
+            tr(v-for="(product, index) in products" :key="product._id")
+              td {{ getSerial(index) }}
+              td {{ product.name }}
+              td {{ cutter({ text: product.description, length: 40 }) }}
+              td {{ product.isLeaf ? 'Yes' : 'No' }}
+              td {{ product.properties ? product.properties.map(p => p.name) : 0 }}
+              td
+                button.btn.btn-danger(@click="destroy(product._id)")
+                  i.fa.fa-fw.fa-trash
+                  | Delete
+                a.btn.btn-secondary.mx-1(href="/product/create")
+                  i.fa.fa-fw.fa-edit
+                  | Edit
+      div.d-flex.justifiy-content-center.align-items-center.flex-column(v-else)
+        h3 No items here
+        .row.my-5: img.col-6.offset-3.w-100.img-fluid(src=assetUrl + "/img/svg/no_data.svg")
+    .card-footer.d-flex.justify-content-center(v-if="pagination.totalPages > 1")
+      paginate(
+        :page-count='pagination.totalPages'
+        :click-handler='getProducts'
+        prev-text='«'
+        next-text='»'
+        container-class="pagination"
+        page-class="page-item"
+        prev-class="page-item"
+        next-class="page-item"
+        page-link-class="page-link"
+        prev-link-class="page-link"
+        next-link-class="page-link"
+      )
+
+block body_js_after
+  script(src=assetUrl + "/js/admin/product_list.js")
+
+block body_js_before_inline
+  script
+    | var products = !{JSON.stringify(products)};
+    | var meta = !{JSON.stringify(meta)};

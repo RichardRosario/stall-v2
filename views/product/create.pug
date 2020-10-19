@@ -1,0 +1,74 @@
+extends ../master/panel/layout
+block content
+  .content-header: .container-fluid: .row.mb-2
+    .col-sm-6: h1.m-0.text-dark Create Product
+    .col-sm-6: ol.breadcrumb.float-sm-right
+      li.breadcrumb-item: a(href="/dashboard") Home
+      li.breadcrumb-item.active Product
+
+  .content: .container-fluid: .card#app: form(
+    role='form'
+    method="POST"
+    v-on:submit.prevent="saveProduct"
+  )
+    .card-header.d-flex.justify-content-between.align-items-center
+      h3.flex-fill.card-title Create Product
+
+    .card-body
+      .row
+        .col-md-6: .form-group
+          label(for='parent_category')
+            | Parent Category
+            sup.text-danger *
+          select.form-control.custom-select#parent_category(
+            v-model="product.categoryId"
+          )
+            option(disabled selected value="") This is parent a top level category
+            option(
+              v-for="categoryItem in categories"
+              :value="categoryItem._id"
+              :key="categoryItem._id"
+            ) {{ categoryItem.name }}
+
+        .col-md-6: .form-group
+          label(for='name')
+            | Name
+            sup.text-danger *
+          input.form-control#name(
+            type='text'
+            maxlength='32'
+            minlength='2'
+            placeholder='Enter Product Name'
+            v-model="product.name"
+            required
+          )
+
+      .row: .col-md-12: .form-group
+        label(for='description')
+          | Description
+          sup.text-danger *
+        textarea.form-control#description(
+          placeholder='Enter Product Description'
+          v-model="product.description"
+          required
+        )
+
+      .row: .col-md-12: .form-group
+        label(for='seoDescription')
+          | SEO Description (120-150 characters)
+          sup.text-danger *
+        textarea.form-control#seoDescription(
+          placeholder='Enter SEO Description (120-150 characters)'
+          data-toggle="tooltip"
+          data-html="true"
+          title="<em>Tooltip</em> <u>with</u> <b>HTML</b>"
+          v-model="product.seoDescription"
+        )
+    .card-footer: button.btn.btn-primary(type='submit') Submit
+
+block body_js_after
+  script(src=assetUrl + "/js/admin/product_create.js")
+
+block body_js_before_inline
+  script
+    | var categories = !{JSON.stringify(categories)};

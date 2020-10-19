@@ -1,7 +1,7 @@
 {
-  "name": "stall-react-node-v2",
+  "name": "stall-node-v2",
   "version": "1.0.0",
-  "description": "a multi-vendor ecommerce website in react and node",
+  "description": "a multi-vendor ecommerce website in node",
   "main": "index.js",
   "keywords": [
     "ecommerce",
@@ -16,26 +16,26 @@
     "url": "https://github.com/RichardRosario/stall-v2.git"
   },
   "scripts": {
-    "start": "node index.js",
     "dev": "nodemon index.js",
     "serve:debug": "nodemon --inspect index.js",
     "test": "mocha tests/*.js --exit",
     "test:chrome": "node test_browser/index.js",
     "lint": "eslint ./*.js",
-    "lint:fix": "eslint --fix ./*.js"
+    "lint:fix": "eslint --fix ./*.js",
+    "asset:watch": "npx webpack --config-name=watch",
+    "asset:build": "npx webpack --config-name=prod",
+    "seed": "node seeds"
   },
   "author": "Richard Rosario",
   "license": "ISC",
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
     "bcrypt": "^5.0.0",
-    "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "helmet": "^4.0.0",
-    "mongoose": "^5.9.28",
+    "joi": "^17.2.1",
+    "mongoose": "^5.10.9",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
